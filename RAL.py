@@ -5,6 +5,7 @@ import os.system
 import webbrowser
 import sys
 import socket
+import datetime.datetime
 import urllib2
 from BeautifulSoup import BeautifulSoup
 
@@ -115,6 +116,28 @@ def traceroute(domain):
 	file.close()
 	f = datetime.datetime.now()
 	print("--> Fetched in: %s" % (str(f-e)))
+def port_scan(domain):
+	print("[-]\tScanning Ports:")
+	initime = datetime.datetime.now()
+	file = open(path,”a”)
+	file.write("---------------------------------[OPEN_PORTS]----------------------------------")
+	try:
+		for port in range(1, 1023):
+			sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			result = sock.connect_ex((socket.gethostbyname(domain), port))
+			if result == 0:
+				print("Port[%d]:\tOpen"% (port))
+				file.write("Port[%d]:\tOpen"% (port))
+			sock.close()
+	except KeyboardInterrupt:
+    print("[-]\tStopped ...")
+    sys.exit()
+	except socket.error:
+    print ("[-]\tProblem connecting to server")
+    sys.exit()
+	file.close()
+	finaltime =datetime.datetime.now()
+	print("--> Fetched in: %s" % (str(finaltime-initime)))
 def rev_domain_lookup(domain):
 	""" Find other domains in the same server """
 	m = datetime.datetime.now()
@@ -146,7 +169,8 @@ def _initialize_arguments(self):
 	parser.add_argument("-w","--whois",help="whois of domain",action="store_true")
 	parser.add_argument("-nl","--ns_lookup",help="NSlookup",action="store_true")
 	parser.add_argument("-tr","--traceroute",help="Traceroute",action="store_true")
-	parser.add_argument("-rl","--rev_domain_lookup",help="Check/Test the DNS security",action="store_true")
+	parser.add_argument("-rl","--rev_domain_lookup",help="Find other domains hosted in the same server",action="store_true")
+	parser.add_argument("-ps","--port_scan",help="Check for open ports",action="store_true")
 	args= parser.parse_args()
 	if args.domain == None:
 			self._usage()
