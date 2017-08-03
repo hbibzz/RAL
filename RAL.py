@@ -19,7 +19,7 @@ def tool_menu():
 	print("											  |_|    - Whtn \'whtn.begins@gmail.com\'")
 def cf(domain):
 	"""Check if project file is created for the lookup"""
-	path = "/projects/%s" % (domain)
+	path = "/projects/%s.txt" % (domain)
 	path_to_file = Path(path)
 	if !path_to_file.is_file():
 		file = open(path,”w”)
