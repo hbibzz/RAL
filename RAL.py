@@ -142,7 +142,7 @@ def rev_domain_lookup(domain):
 	print("--> Fetched in: %s" % (str(n-m)))
 def _initialize_arguments(self):
 	parser = argparse.ArgumentParser('Pentester Automation Tool : Reconnaissance Automated Lookup')
-	parser.add_argument("-d","--domain",type=str,help="The Domain Name to lookup
+	parser.add_argument("-d","--domain",type=str,help="The Domain Name to lookup")
 	parser.add_argument("-w","--whois",help="whois of domain",action="store_true")
 	parser.add_argument("-nl","--ns_lookup",help="NSlookup",action="store_true")
 	parser.add_argument("-tr","--traceroute",help="Traceroute",action="store_true")
